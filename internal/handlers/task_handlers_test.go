@@ -55,7 +55,7 @@ func (s *TaskHandlersSuite) TestAddTask() {
 	}
 
 	successTaskDto := mapper.ToTaskResponse(successTask)
-	successTaskJson, err := json.Marshal(successTaskDto)
+	successTaskJSON, err := json.Marshal(successTaskDto)
 	require.NoError(s.T(), err)
 
 	invalidTask := model.Task{
@@ -64,7 +64,7 @@ func (s *TaskHandlersSuite) TestAddTask() {
 		Applications: []string{"app1", "app2"},
 	}
 
-	invalidTaskJson, err := json.Marshal(invalidTask)
+	invalidTaskJSON, err := json.Marshal(invalidTask)
 	require.NoError(s.T(), err)
 
 	testCases := []struct {
@@ -88,16 +88,16 @@ func (s *TaskHandlersSuite) TestAddTask() {
 		{
 			name:         "Success",
 			method:       http.MethodPost,
-			body:         string(successTaskJson),
+			body:         string(successTaskJSON),
 			header:       map[string][]string{"Content-Type": {"application/json"}},
 			path:         "http://localhost:8080/tasks",
 			expectedCode: http.StatusOK,
-			expectedBody: string(successTaskJson),
+			expectedBody: string(successTaskJSON),
 		},
 		{
 			name:         "Bad request - invalid task",
 			method:       http.MethodPost,
-			body:         string(invalidTaskJson),
+			body:         string(invalidTaskJSON),
 			header:       map[string][]string{"Content-Type": {"application/json"}},
 			path:         "http://localhost:8080/tasks",
 			expectedCode: http.StatusBadRequest,
@@ -136,7 +136,7 @@ func (s *TaskHandlersSuite) TestGetByID() {
 	}
 	s.r.Tasks[successTask.ID] = successTask
 	successTaskDto := mapper.ToTaskResponse(successTask)
-	successTaskJson, err := json.Marshal(successTaskDto)
+	successTaskJSON, err := json.Marshal(successTaskDto)
 	require.NoError(s.T(), err)
 
 	testCases := []struct {
@@ -146,13 +146,12 @@ func (s *TaskHandlersSuite) TestGetByID() {
 		expectedCode int
 		expectedBody string
 	}{
-
 		{
 			name:         "Success",
 			method:       http.MethodGet,
 			path:         "http://localhost:8080/tasks/3",
 			expectedCode: http.StatusOK,
-			expectedBody: string(successTaskJson),
+			expectedBody: string(successTaskJSON),
 		},
 		{
 			name:         "Bad request - unable to find task",
@@ -188,7 +187,6 @@ func (s *TaskHandlersSuite) TestGetAll() {
 		expectedCode int
 		expectedBody []dto.TaskResponse
 	}{
-
 		{
 			name:         "Success",
 			method:       http.MethodGet,
@@ -224,7 +222,6 @@ func (s *TaskHandlersSuite) TestDeleteByID() {
 		expectedCode int
 		expectedBody string
 	}{
-
 		{
 			name:         "Success",
 			method:       http.MethodDelete,

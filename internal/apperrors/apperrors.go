@@ -5,10 +5,7 @@ import (
 	"fmt"
 )
 
-var (
-	ErrTaskNotFound = errors.New("task not found")
-	ErrEmptyRequest = errors.New("empty request")
-)
+var ErrTaskNotFound = errors.New("task not found")
 
 type ValueError struct {
 	caller string
