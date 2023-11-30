@@ -13,14 +13,14 @@ import (
 type TaskStorage struct {
 	mu     sync.RWMutex
 	logger *zap.Logger
-	tasks  map[string]model.Task
+	Tasks  map[string]model.Task
 }
 
 func NewTaskStorage(logger *zap.Logger) *TaskStorage {
 	return &TaskStorage{
 		mu:     sync.RWMutex{},
 		logger: logger,
-		tasks: map[string]model.Task{
+		Tasks: map[string]model.Task{
 			"1": {
 				ID:          "1",
 				Description: "Сделать финальное задание темы REST API",
@@ -51,16 +51,16 @@ func (r *TaskStorage) Insert(task model.Task) (*model.Task, error) {
 	defer r.mu.Unlock()
 
 	savedTask := task
-	r.tasks[savedTask.ID] = savedTask
+	r.Tasks[savedTask.ID] = savedTask
 
 	return &savedTask, nil
 }
 
-func (r *TaskStorage) SelectById(id string) (*model.Task, error) {
+func (r *TaskStorage) SelectByID(id string) (*model.Task, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
-	task, ok := r.tasks[id]
+	task, ok := r.Tasks[id]
 	if !ok {
 		return nil, apperrors.NewValueError(utils.Caller(), apperrors.ErrTaskNotFound)
 	}
@@ -72,24 +72,24 @@ func (r *TaskStorage) SelectAll() ([]model.Task, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
-	tasks := make([]model.Task, 0, len(r.tasks))
-	for _, task := range r.tasks {
+	tasks := make([]model.Task, 0, len(r.Tasks))
+	for _, task := range r.Tasks {
 		tasks = append(tasks, task)
 	}
 
 	return tasks, nil
 }
 
-func (r *TaskStorage) DeleteById(id string) error {
+func (r *TaskStorage) DeleteByID(id string) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	_, ok := r.tasks[id]
+	_, ok := r.Tasks[id]
 	if !ok {
 		return apperrors.NewValueError(utils.Caller(), apperrors.ErrTaskNotFound)
 	}
 
-	delete(r.tasks, id)
+	delete(r.Tasks, id)
 
 	return nil
 }

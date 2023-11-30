@@ -11,9 +11,9 @@ import (
 
 type TaskRepository interface {
 	Insert(task model.Task) (*model.Task, error)
-	SelectById(id string) (*model.Task, error)
+	SelectByID(id string) (*model.Task, error)
 	SelectAll() ([]model.Task, error)
-	DeleteById(id string) error
+	DeleteByID(id string) error
 }
 
 type TaskService struct {
@@ -37,8 +37,8 @@ func (s *TaskService) Add(task model.Task) (*model.Task, error) {
 	return savedTask, nil
 }
 
-func (s *TaskService) GetById(id string) (*model.Task, error) {
-	task, err := s.taskRepository.SelectById(id)
+func (s *TaskService) GetByID(id string) (*model.Task, error) {
+	task, err := s.taskRepository.SelectByID(id)
 	if err != nil {
 		return nil, fmt.Errorf("%s %w", utils.Caller(), err)
 	}
@@ -55,8 +55,8 @@ func (s *TaskService) GetAll() ([]model.Task, error) {
 	return tasks, nil
 }
 
-func (s *TaskService) DeleteById(id string) error {
-	err := s.taskRepository.DeleteById(id)
+func (s *TaskService) DeleteByID(id string) error {
+	err := s.taskRepository.DeleteByID(id)
 	if err != nil {
 		return fmt.Errorf("%s %w", utils.Caller(), err)
 	}
