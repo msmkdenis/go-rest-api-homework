@@ -91,6 +91,7 @@ func (h *TaskHandlers) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	_, writeErr := w.Write(response)
 	if writeErr != nil {
 		h.logger.Error("Bad Request: unknown error", zap.Error(writeErr))
@@ -123,6 +124,7 @@ func (h *TaskHandlers) GetByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	_, writeErr := w.Write(response)
 	if writeErr != nil {
 		h.logger.Error("Bad Request: unknown error", zap.Error(writeErr))
@@ -151,6 +153,7 @@ func (h *TaskHandlers) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	_, writeErr := w.Write(response)
 	if writeErr != nil {
 		h.logger.Error("Internal Server Error: unknown error", zap.Error(writeErr))
