@@ -91,7 +91,7 @@ func (s *TaskHandlersSuite) TestAddTask() {
 			body:         string(successTaskJSON),
 			header:       map[string][]string{"Content-Type": {"application/json"}},
 			path:         "http://localhost:8080/tasks",
-			expectedCode: http.StatusOK,
+			expectedCode: http.StatusCreated,
 			expectedBody: string(successTaskJSON),
 		},
 		{

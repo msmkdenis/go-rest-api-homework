@@ -92,6 +92,7 @@ func (h *TaskHandlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
 	_, writeErr := w.Write(response)
 	if writeErr != nil {
 		h.logger.Error("Bad Request: unknown error", zap.Error(writeErr))
