@@ -129,8 +129,8 @@ func (h *TaskHandlers) GetByID(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, writeErr := w.Write(response)
 	if writeErr != nil {
-		h.logger.Error("Bad Request: unknown error", zap.Error(writeErr))
-		http.Error(w, "Unable to write response", http.StatusBadRequest)
+		h.logger.Error("Internal Server Error: unknown error", zap.Error(writeErr))
+		http.Error(w, "Unable to write response", http.StatusInternalServerError)
 		return
 	}
 }
