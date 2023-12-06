@@ -55,6 +55,7 @@ func (h *TaskHandlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, readBodyErr := io.ReadAll(r.Body)
+	defer r.Body.Close()
 	if readBodyErr != nil {
 		h.logger.Warn("Bad Request: unknown error", zap.Error(readBodyErr))
 		http.Error(w, "Unable to read request", http.StatusBadRequest)
